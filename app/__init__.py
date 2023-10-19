@@ -33,9 +33,8 @@ def step():
     pieces = app.game_data["pieces"]
     sort_pieces = sorted(pieces, key=lambda x: x[0] + x[1], reverse=True)
     c_head=-1
-    rx=-1
-    ry=-1
-    
+    rx=ry=-1
+
     if h1 == -1:
         rx,ry=sort_pieces[0]
         c_head=0
@@ -43,11 +42,11 @@ def step():
         for i in range(len(sort_pieces)):
             x, y = sort_pieces[i]
             if x==h1 or y == h1:
-                rx,ry=pieces[i]
+                rx,ry=sort_pieces[i]
                 c_head=0
                 break
             elif x==h2 or y == h2:
-                rx,ry=pieces[i]
+                rx,ry=sort_pieces[i]
                 c_head=1
                 break
         if c_head==-1:
