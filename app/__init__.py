@@ -31,31 +31,49 @@ def step():
     [h1, h2] = request.get_json()
     # decide what to play
     pieces = app.game_data["pieces"]
-    print("######### non  #########")
-    print(pieces)
-    print("\n")
-    print("#######################")
-    print("\n")
-    pot = sorted(pieces, key=lambda x: x[0] + x[1], reverse=True)
-    print("######### sorted  #########")
-    print(pot)
-    print("\n")
-    print("#######################")
-    print("\n")
+    sort_pieces = sorted(pieces, key=lambda x: x[0] + x[1], reverse=True)
+    c_head=-1
+    rx=-1
+    ry=-1
+    
     if h1 == -1:
-        # heads = [-1, -1], meaning that it is the first move
-        # any piece can be selected
-        piece = pieces.pop(0)
-        return message(piece, 0)
+        rx,ry=sort_pieces[0]
+        c_head=0
+    else:
+        for i in range(len(sort_pieces)):
+            x, y = sort_pieces[i]
+            if x==h1 or y == h1:
+                rx,ry=pieces[i]
+                c_head=0
+                break
+            elif x==h2 or y == h2:
+                rx,ry=pieces[i]
+                c_head=1
+                break
+        if c_head==-1:
+            return message(None, None)
+
     for i in range(len(pieces)):
-        x, y = pieces[i]
-        if x==h1 or y == h1:
+        x,y=pieces[i]
+        if x==rx and y==ry:
             pieces.pop(i)
-            return message([x, y], 0)
-        if x==h2 or y == h2:
-            pieces.pop(i)
-            return message([x, y], 1)
+            return message([x, y], c_head)
     return message(None, None)
+   
+    # if h1 == -1:
+    #     # heads = [-1, -1], meaning that it is the first move
+    #     # any piece can be selected
+    #     piece = pieces.pop(0)
+    #     return message(piece, 0)
+    # for i in range(len(pieces)):
+    #     x, y = pieces[i]
+    #     if x==h1 or y == h1:
+    #         pieces.pop(i)
+    #         return message([x, y], 0)
+    #     if x==h2 or y == h2:
+    #         pieces.pop(i)
+    #         return message([x, y], 1)
+    # return message(None, None)
 
 @app.route("/log", methods=["POST"])
 def log():
