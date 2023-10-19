@@ -31,19 +31,19 @@ def step():
     [h1, h2] = request.get_json()
     # decide what to play
     pieces = app.game_data["pieces"]
-    sorted_pieces = sorted(pieces, key=lambda x: x[0] + x[1], reverse=True)
+    pieces = sorted(pieces, key=lambda x: x[0] + x[1], reverse=True)
     if h1 == -1:
         # heads = [-1, -1], meaning that it is the first move
         # any piece can be selected
-        piece = sorted_pieces.pop(0)
+        piece = pieces.pop(0)
         return message(piece, 0)
-    for i in range(len(sorted_pieces)):
-        x, y = sorted_pieces[i]
+    for i in range(len(pieces)):
+        x, y = pieces[i]
         if x==h1 or y == h1:
-            sorted_pieces.pop(i)
+            pieces.pop(i)
             return message([x, y], 0)
         if x==h2 or y == h2:
-            sorted_pieces.pop(i)
+            pieces.pop(i)
             return message([x, y], 1)
     return message(None, None)
 
