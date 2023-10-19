@@ -31,7 +31,17 @@ def step():
     [h1, h2] = request.get_json()
     # decide what to play
     pieces = app.game_data["pieces"]
-    # pieces = sorted(pieces, key=lambda x: x[0] + x[1], reverse=True)
+    print("######### non  #########")
+    print(pieces)
+    print("\n")
+    print("#######################")
+    print("\n")
+    pot = sorted(pieces, key=lambda x: x[0] + x[1], reverse=True)
+    print("######### sorted  #########")
+    print(pot)
+    print("\n")
+    print("#######################")
+    print("\n")
     if h1 == -1:
         # heads = [-1, -1], meaning that it is the first move
         # any piece can be selected
